@@ -1,5 +1,6 @@
 '''csvファイルを読み込んで、動きをトレース'''
 import pyautogui as gui
+import time
 
 filename='a.csv'
 
@@ -10,6 +11,7 @@ with open(filename,'r',encoding='utf-8') as f:
         lst=line.strip().split(',')
         all_lst.append(lst)
 
+    start_time = time.time()
 
     # 配列から
     for lst in all_lst:
@@ -25,4 +27,6 @@ with open(filename,'r',encoding='utf-8') as f:
             gui.rightClick(x,y)
         
         
-        
+    end_time = time.time()
+    actual_duration = end_time - start_time
+    print(f"Event: {event}, Expected Duration: {duray if event == 'move' else 'N/A'}, Actual Duration: {actual_duration}")    
