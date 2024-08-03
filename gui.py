@@ -19,5 +19,7 @@ import pyautogui
 # # 文字を入力
 # pyautogui.write('abcdefghi')
 
+pyautogui.dragTo(100, 300, duration=2, button="left")
+
 # マウスの座標や色などを表示
-pyautogui.mouseInfo()
+# pyautogui.mouseInfo()
