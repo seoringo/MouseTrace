@@ -1,0 +1,5 @@
+click,1246,588,Button.left
+move,896,504
+drag,917,590
+click,917,590,Button.left
+click,917,590,Button.right

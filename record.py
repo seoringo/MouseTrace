@@ -1,8 +1,6 @@
 '''動きを記録してcsvファイルに保存'''
-'''動きを記録してcsvファイルに保存'''
-# from pynput.mouse import Listener, Button
 from pynput import mouse,keyboard
-import time
+import os
 
 # マウスイベントと座標のリスト
 event_lst=[]
@@ -47,16 +45,28 @@ class RecordMouseMovement:
             
 
     def save_event(self,lst=[],filename=''):
-        '''excelにイベントや座標を保存'''
+        '''ファイルにイベントを保存'''
+
+        DIR_NAME = "MouseRecords"
+        try:
+            if not os.path.exists(DIR_NAME):
+                # ディレクトリが存在しない場合、ディレクトリを作成する
+                os.makedirs(DIR_NAME)
+        except Exception as e:
+            print(e)
 
         if filename=='':
             # タイムスタンプ
             filename='a.csv'
         
-        with open(filename,'w',encoding='utf-8') as f:
-            for row in lst:
-                f.write(','.join(row)+'\n')
-
+        # イベントを保存
+        try:
+            file_path=DIR_NAME+'/'+filename
+            with open(file_path,'w',encoding='utf-8') as f:
+                for row in lst:
+                    f.write(','.join(row)+'\n')
+        except Exception as e:
+            print(e)
 
     def start(self): 
             self.mouse_listener.start()

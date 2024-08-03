@@ -1,5 +1,4 @@
 import pyautogui as gui
-import time
 
 filename='a.csv'
 
