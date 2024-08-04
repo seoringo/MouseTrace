@@ -1,4 +1,5 @@
 import pyautogui as gui
+import wx
 
 filename='a.csv'
 
@@ -9,6 +10,12 @@ class ReproductionMouse:
         self.all_lst=[]
 
     def get_content(self,filename=''):
+        '''ファイルの取得'''
+
+        if filename=='':
+            wx.MessageBox(u'ファイル名が指定されていません', u'エラー', wx.OK)
+            return
+
         try:
             DIR_NAME = "MouseRecords"
             file_path=DIR_NAME+'/'+filename
@@ -16,8 +23,9 @@ class ReproductionMouse:
             with open(file_path, 'r', encoding='utf-8') as f:
                 self.all_lst = [line.strip().split(',') for line in f]
                 self.exe_event()
-        except Exception as e:
-            print(e)
+        except FileNotFoundError:
+            wx.MessageBox(u'ファイルが存在しません', u'エラー', wx.OK)
+            return
 
 
     # イベント実行

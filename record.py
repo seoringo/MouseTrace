@@ -1,4 +1,5 @@
 '''動きを記録してcsvファイルに保存'''
+import datetime
 from pynput import mouse,keyboard
 import os
 
@@ -59,7 +60,9 @@ class RecordMouseMovement:
         if self.filename=='':
             # タイムスタンプ
             # すでにファイルが作成されていた時
-            self.filename='a.csv'
+            now = datetime.datetime.now()
+            self.filename =now.strftime('%Y%m%d_%H%M%S') + '.csv'
+            # self.filename='a.csv'
         
         # イベントを保存
         try:
