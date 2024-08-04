@@ -10,9 +10,12 @@ class ReproductionMouse:
 
     def get_content(self,filename='a.csv'):
         try:
+            DIR_NAME = "MouseRecords"
+            file_path=DIR_NAME+'/'+filename
             # ファイルの読み込みとパース
-            with open(filename, 'r', encoding='utf-8') as f:
+            with open(file_path, 'r', encoding='utf-8') as f:
                 self.all_lst = [line.strip().split(',') for line in f]
+                self.exe_event()
         except Exception as e:
             print(e)
 
@@ -32,8 +35,11 @@ class ReproductionMouse:
             elif event=='drag':
                 gui.dragTo(x,y,duration=duray)
 
+# def btn_repro():
+#     '''再現ボタンが押された'''
+#     repro = ReproductionMouse()
+#     repro.get_content()
 
 if __name__ == "__main__":
     repro = ReproductionMouse()
     repro.get_content()
-    repro.exe_event()

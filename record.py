@@ -85,6 +85,11 @@ class RecordMouseMovement:
             self.save_event(event_lst)
             
 
+# def btn_record():
+#     '''記録ボタンを押された'''
+#     record = RecordMouseMovement()
+#     record.start()
+
 
 if __name__ == "__main__":
     record = RecordMouseMovement()
