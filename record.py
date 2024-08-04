@@ -9,6 +9,7 @@ class RecordMouseMovement:
         self.isClicked=False
         self.isDragging=False
         self.drag_start_pos=[]
+        self.filename=''
         self.mouse_listener = mouse.Listener(on_click=self.on_click,on_move=self.on_move)
         self.key_listener = keyboard.Listener(on_press=self.end)
 
@@ -44,7 +45,7 @@ class RecordMouseMovement:
             self.isDragging=False
             
 
-    def save_event(self,lst=[],filename=''):
+    def save_event(self,lst=[]):
         '''ファイルにイベントを保存'''
 
         DIR_NAME = "MouseRecords"
@@ -55,20 +56,22 @@ class RecordMouseMovement:
         except Exception as e:
             print(e)
 
-        if filename=='':
+        if self.filename=='':
             # タイムスタンプ
-            filename='a.csv'
+            # すでにファイルが作成されていた時
+            self.filename='a.csv'
         
         # イベントを保存
         try:
-            file_path=DIR_NAME+'/'+filename
+            file_path=DIR_NAME+'/'+self.filename
             with open(file_path,'w',encoding='utf-8') as f:
                 for row in lst:
                     f.write(','.join(row)+'\n')
         except Exception as e:
             print(e)
 
-    def start(self): 
+    def start(self,filename=''): 
+            self.filename=filename
             self.mouse_listener.start()
             self.key_listener.start()       
             self.mouse_listener.join()

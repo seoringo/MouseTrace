@@ -8,7 +8,7 @@ class ReproductionMouse:
     def __init__(self):
         self.all_lst=[]
 
-    def get_content(self,filename='a.csv'):
+    def get_content(self,filename=''):
         try:
             DIR_NAME = "MouseRecords"
             file_path=DIR_NAME+'/'+filename
@@ -42,4 +42,4 @@ class ReproductionMouse:
 
 if __name__ == "__main__":
     repro = ReproductionMouse()
-    repro.get_content()
+    repro.get_content(filename='a.csv')

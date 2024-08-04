@@ -5,7 +5,8 @@
 #
 
 import wx
-
+from record import RecordMouseMovement
+from repro import ReproductionMouse
 # begin wxGlade: dependencies
 # end wxGlade
 
@@ -44,16 +45,22 @@ class MyFrame(wx.Frame):
 
         self.Layout()
 
-        self.button_1.Bind(wx.EVT_BUTTON, self.btn_record())
-        self.button_2.Bind(wx.EVT_BUTTON, self.btn_repro())
+        self.button_1.Bind(wx.EVT_BUTTON, self.btn_record)
+        self.button_2.Bind(wx.EVT_BUTTON, self.btn_repro)
         # end wxGlade
 
     def btn_record(self, event):  # wxGlade: MyFrame.<event_handler>
-        print("Event handler 'btn_record' not implemented!")
+        '''記録ボタンを押された'''
+        record = RecordMouseMovement()
+        text=self.text_ctrl_1.GetValue()
+        record.start(filename=text)
         event.Skip()
 
     def btn_repro(self, event):  # wxGlade: MyFrame.<event_handler>
-        print("Event handler 'btn_repro' not implemented!")
+        '''再現ボタンが押された'''
+        repro = ReproductionMouse()
+        text=self.text_ctrl_1.GetValue()
+        repro.get_content(filename=text)
         event.Skip()
 
 # end of class MyFrame
