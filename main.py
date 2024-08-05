@@ -58,17 +58,17 @@ class MyFrame(wx.Frame):
 
     def btn_record(self, event):  # wxGlade: MyFrame.<event_handler>
         '''記録ボタンを押された'''
-        record = RecordMouseMovement()
-        text=self.text_ctrl_1.GetValue()
-        record.start(filename=text)
+        name=self.text_ctrl_1.GetValue()
+        record = RecordMouseMovement(filename=name)
+        record.start()
         event.Skip()
 
     def btn_repro(self, event):  # wxGlade: MyFrame.<event_handler>
         '''再現ボタンが押された'''
         name=self.text_ctrl_1.GetValue()
         num=self.text_ctrl_2.GetValue()
-        repro = ReproductionMouse(int(num))
-        repro.get_content(filename=name)
+        repro = ReproductionMouse(filename=name,repeat=num)
+        repro.get_content()
         event.Skip()
 
 # end of class MyFrame

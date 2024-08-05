@@ -2,18 +2,34 @@
 import datetime
 from pynput import mouse,keyboard
 import os
+import wx
 
 # マウスイベントと座標のリスト
 event_lst=[]
+DIR_NAME = "MouseRecords"
+
 class RecordMouseMovement:
-    def __init__(self):
+    def __init__(self,filename=''):
         self.isClicked=False
         self.isDragging=False
         self.drag_start_pos=[]
-        self.filename=''
+        self.filename=filename
         self.mouse_listener = mouse.Listener(on_click=self.on_click,on_move=self.on_move)
         self.key_listener = keyboard.Listener(on_press=self.end)
 
+
+    @property
+    def filename(self):
+        return self.__filename
+
+    @filename.setter
+    def filename(self, filename=''):
+        if filename=='':
+            # ファイル名が指定されていなかった場合　日時で作成
+            now = datetime.datetime.now()
+            self.__filename =now.strftime('%Y%m%d_%H%M%S') + '.csv'
+        else:
+            self.__filename=filename
     
     def on_move(self,x,y):
         if self.isClicked==True:
@@ -49,7 +65,7 @@ class RecordMouseMovement:
     def save_event(self,lst=[]):
         '''ファイルにイベントを保存'''
 
-        DIR_NAME = "MouseRecords"
+        # DIR_NAME = "MouseRecords"
         try:
             if not os.path.exists(DIR_NAME):
                 # ディレクトリが存在しない場合、ディレクトリを作成する
@@ -57,24 +73,22 @@ class RecordMouseMovement:
         except Exception as e:
             print(e)
 
-        if self.filename=='':
-            # タイムスタンプ
-            # すでにファイルが作成されていた時
-            now = datetime.datetime.now()
-            self.filename =now.strftime('%Y%m%d_%H%M%S') + '.csv'
-            # self.filename='a.csv'
         
+        file_path=DIR_NAME+'/'+self.filename
+        if os.path.isfile(file_path):
+            # ファイルが既に存在する
+            wx.MessageBox(u'すでに存在するファイルです', u'エラー', wx.OK)
+            return
+
         # イベントを保存
         try:
-            file_path=DIR_NAME+'/'+self.filename
             with open(file_path,'w',encoding='utf-8') as f:
                 for row in lst:
                     f.write(','.join(row)+'\n')
         except Exception as e:
             print(e)
 
-    def start(self,filename=''): 
-            self.filename=filename
+    def start(self): 
             self.mouse_listener.start()
             self.key_listener.start()       
             self.mouse_listener.join()

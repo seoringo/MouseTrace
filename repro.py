@@ -6,20 +6,43 @@ filename='a.csv'
 class ReproductionMouse:
     '''動きを再現'''   
 
-    def __init__(self,repeat=1):
+    def __init__(self,filename='',repeat='1'):
         self.all_lst=[]
         self.repeat=repeat
+        self.filename=filename
 
-    def get_content(self,filename=''):
-        '''ファイルの取得'''
+    @property
+    def filename(self):
+        return self.__filename
 
+    @filename.setter
+    def filename(self, filename):
         if filename=='':
             wx.MessageBox(u'ファイル名が指定されていません', u'エラー', wx.OK)
             return
+        else:
+            self.__filename=filename
 
+
+
+    @property
+    def repeat(self):
+        return self.__repeat
+
+    @repeat.setter
+    def repeat(self, repeat):
+        if repeat.isdecimal():
+            self.__repeat = int(repeat)
+        else:
+            wx.MessageBox(u'数値で指定してください', u'エラー', wx.OK)
+            return
+        
+        
+    def get_content(self):
+        '''ファイルの取得'''
         try:
             DIR_NAME = "MouseRecords"
-            file_path=DIR_NAME+'/'+filename
+            file_path=DIR_NAME+'/'+self.filename
             # ファイルの読み込みとパース
             with open(file_path, 'r', encoding='utf-8') as f:
                 self.all_lst = [line.strip().split(',') for line in f]
