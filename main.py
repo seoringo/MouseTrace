@@ -32,6 +32,13 @@ class MyFrame(wx.Frame):
         self.text_ctrl_1 = wx.TextCtrl(self.panel_1, wx.ID_ANY, "")
         sizer_1.Add(self.text_ctrl_1, 0, 0, 0)
 
+        # 繰り返し
+        label_2 = wx.StaticText(self.panel_1, wx.ID_ANY, u"繰り返し回数")
+        sizer_1.Add(label_2, 0, 0, 0)
+
+        self.text_ctrl_2 = wx.TextCtrl(self.panel_1, wx.ID_ANY, "")
+        sizer_1.Add(self.text_ctrl_2, 0, 0, 0)
+
         sizer_2 = wx.BoxSizer(wx.HORIZONTAL)
         sizer_1.Add(sizer_2, 1, wx.EXPAND, 0)
 
@@ -58,9 +65,10 @@ class MyFrame(wx.Frame):
 
     def btn_repro(self, event):  # wxGlade: MyFrame.<event_handler>
         '''再現ボタンが押された'''
-        repro = ReproductionMouse()
-        text=self.text_ctrl_1.GetValue()
-        repro.get_content(filename=text)
+        name=self.text_ctrl_1.GetValue()
+        num=self.text_ctrl_2.GetValue()
+        repro = ReproductionMouse(int(num))
+        repro.get_content(filename=name)
         event.Skip()
 
 # end of class MyFrame

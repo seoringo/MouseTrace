@@ -6,8 +6,9 @@ filename='a.csv'
 class ReproductionMouse:
     '''動きを再現'''   
 
-    def __init__(self):
+    def __init__(self,repeat=1):
         self.all_lst=[]
+        self.repeat=repeat
 
     def get_content(self,filename=''):
         '''ファイルの取得'''
@@ -30,18 +31,19 @@ class ReproductionMouse:
 
     # イベント実行
     def exe_event(self,duray=1.0):
-        for lst in self.all_lst:
-            event, x, y = lst[0], int(lst[1]), int(lst[2])
-            if event == 'move':
-                gui.moveTo(x, y, duration=duray)
-            elif event=='click':
-                button=lst[3]
-                if button=='Button.left':
-                    gui.click(x,y)
-                else:
-                    gui.rightClick(x,y)
-            elif event=='drag':
-                gui.dragTo(x,y,duration=duray)
+        for i in range(self.repeat):
+            for lst in self.all_lst:
+                event, x, y = lst[0], int(lst[1]), int(lst[2])
+                if event == 'move':
+                    gui.moveTo(x, y, duration=duray)
+                elif event=='click':
+                    button=lst[3]
+                    if button=='Button.left':
+                        gui.click(x,y)
+                    else:
+                        gui.rightClick(x,y)
+                elif event=='drag':
+                    gui.dragTo(x,y,duration=duray)
 
 # def btn_repro():
 #     '''再現ボタンが押された'''
@@ -50,4 +52,4 @@ class ReproductionMouse:
 
 if __name__ == "__main__":
     repro = ReproductionMouse()
-    repro.get_content(filename='a.csv')
+    repro.get_content()
